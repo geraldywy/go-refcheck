@@ -25,11 +25,11 @@ func (l *MyLargeStruct) Okay() bool {
 	return *l.E
 }
 
-func (l MyLargeStruct) NotOkay() bool { // want "function with receiver passed by value to large struct MyLargeStruct"
+func (l MyLargeStruct) NotOkay() bool { // want "large struct MyLargeStruct passed as value to function receiver"
 	return *l.E
 }
 
-func (l MyLargeStruct) NotOkayAlso() string { // want "function with receiver passed by value to large struct MyLargeStruct"
+func (l MyLargeStruct) NotOkayAlso() string { // want "large struct MyLargeStruct passed as value to function receiver"
 	l.A = "assigning to a copy"
 	return l.A
 }
@@ -44,7 +44,7 @@ type MyOtherLargeStruct struct {
 	A                int
 }
 
-func (m MyOtherLargeStruct) NotOkay() int { // want "function with receiver passed by value to large struct MyOtherLargeStruct"
+func (m MyOtherLargeStruct) NotOkay() int { // want "large struct MyOtherLargeStruct passed as value to function receiver"
 	return m.A
 }
 
