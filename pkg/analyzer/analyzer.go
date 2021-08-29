@@ -19,8 +19,8 @@ var maxStructWidth = flag.Int64("max", 32, "maximum size in bytes a struct can b
 
 func NewAnalyzer() *analysis.Analyzer {
 	return &analysis.Analyzer{
-		Name:     "tutorial",
-		Doc:      "just messing around",
+		Name:     "gorefcheck",
+		Doc:      "reports function receivers where use of large structs are passed by value",
 		Run:      run,
 		Flags:    flagSet,
 		Requires: []*analysis.Analyzer{inspect.Analyzer},
@@ -69,7 +69,7 @@ func run(pass *analysis.Pass) (interface{}, error) {
 		}
 		isLargeStruct := largeStructsCache[structName]
 		if isLargeStruct {
-			pass.Reportf(pos, "function with receiver passed by value to large struct %s", structName)
+			pass.Reportf(pos, "large struct %s passed as value to function receiver", structName)
 		}
 	}
 	return nil, nil
