@@ -69,13 +69,13 @@ func run(pass *analysis.Pass) (interface{}, error) {
 		}
 		isLargeStruct := largeStructsCache[structName]
 		if isLargeStruct {
-			pass.Reportf(pos, "large struct %s passed as value to function receiver", structName)
+			pass.Reportf(pos, "large struct \"%s\" passed by value to function receiver", structName)
 		}
 	}
 	return nil, nil
 }
 
-// returns whether a node is a large struct
+// checks whether a node is a large struct
 func checkWideStruct(pass *analysis.Pass, node *ast.TypeSpec, maxSize int64, largeStructsCache map[string]bool) {
 	structName := node.Name.Name
 	if _, ok := largeStructsCache[structName]; ok { // check cache

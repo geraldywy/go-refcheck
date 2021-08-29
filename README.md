@@ -4,6 +4,24 @@
 
 `go-refcheck` reports function receivers where use of large structs are passed by value. 
 
+## Why?
+
+Q: I'm still a little confused about when to choose value or pointer
+receivers. Can you provide any concrete/real-world examples of when we
+would choose one over the other?
+
+A: When you want to modify the state of the receiver, you have to use
+pointer receivers.  If the struct is very big, you probably want to
+use a pointer receiver because value receivers operate on a copy.  If
+neither applies, you can use a value receiver.  However, be careful
+with value receivers; e.g., if you have a mutex in a struct, you
+cannot make it a value receiver, because the mutex would be copied,
+defeating its purpose.
+
+[Source](https://pdos.csail.mit.edu/6.824/papers/tour-faq.txt)
+
+Also, see [`copyfighter`](https://github.com/jmhodges/copyfighter) for a similar linter.
+
 ## Example
     type MyLargeStruct struct {
         A string
@@ -23,28 +41,9 @@
 
 The function `NotOkay` is flagged as follows:
 
-    $ .../testdata/src/p/p.go:28:9: large struct MyLargeStruct passed as value to function receiver
+    $ .../testdata/src/p/p.go:28:9: large struct "MyLargeStruct" passed by value to function receiver
 
 More examples can be found in the [testdata](https://github.com/geraldywy/go-refcheck/blob/master/testdata/src/p/p.go) folder.
-
-
-## Why?
-
-Q: I'm still a little confused about when to choose value or pointer
-receivers. Can you provide any concrete/real-world examples of when we
-would choose one over the other?
-
-A: When you want to modify the state of the receiver, you have to use
-pointer receivers.  If the struct is very big, you probably want to
-use a pointer receiver because value receivers operate on a copy.  If
-neither applies, you can use a value receiver.  However, be careful
-with value receivers; e.g., if you have a mutex in a struct, you
-cannot make it a value receiver, because the mutex would be copied,
-defeating its purpose.
-
-[Source](https://pdos.csail.mit.edu/6.824/papers/tour-faq.txt)
-
-Also, see [`copyfighter`](https://github.com/jmhodges/copyfighter) for a similar linter.
 
 ## Flags
 By default, large structs are assumed to be larger than 32 bytes, this value can be toggled with a `max` flag.
