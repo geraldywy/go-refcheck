@@ -29,7 +29,7 @@ Also, see [`copyfighter`](https://github.com/jmhodges/copyfighter) for a similar
 
 The function `NotOkay` is flagged as follows:
     
-    go-refcheck ./...
+    $ go-refcheck ./...
 
     $ .../testdata/src/p/p.go:28:9: large struct "MyLargeStruct" passed by value to function receiver
 
