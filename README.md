@@ -1,6 +1,6 @@
 # go-refcheck
 
-    go get github.com/geraldywy/go-refcheck
+    go install github.com/geraldywy/go-refcheck
 
 `go-refcheck` reports function receivers where use of large structs are passed by value.
 
