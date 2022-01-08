@@ -41,9 +41,4 @@ By default, large structs are assumed to be larger than 32 bytes, this value can
 Eg: To only flag for large structs larger than 64 bytes:
 
 `go-refcheck -max 64 ./...`
-## False positives
-Kindly open an issue for such cases.
-
-## Contributions
-Yes please, create an issue/PR for any suggestions.
 
